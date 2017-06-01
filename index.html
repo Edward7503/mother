@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>母亲节</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        #warp{
+            background-size: 100% 100%;
+            margin: 0 auto;
+        }
+        #list li{
+            width: 100%;
+            background: url("img/bg.png") 0 0 no-repeat;
+            text-align: center;
+            overflow: hidden;
+            display: none;
+        }
+        /*第一页*/
+        #list li:first-child .p{
+            width: 100%;
+            display: block;
+            font-size: 0;
+        }
+        #list li:first-child .p1{
+            margin-top: -100%;
+        }
+        #list li:first-child .t1{
+            width: 80%;
+            font-size: 0;
+            margin-left: -200%;
+        }
+        #list li:first-child .t2{
+            width: 100%;
+            font-size: 0;
+            margin-right: -200%;
+        }
+        /*第二页*/
+        #list li .top,
+        #list li .bottom{
+            width: 90%;
+            margin: 0 auto;
+        }
+        #list li .top{
+            margin-top: 8%;
+            margin-bottom: 5%;
+        }
+    </style>
+</head>
+<body>
+    <div id="warp">
+        <ul id="list">
+            <!--第一页-->
+            <li style="display: block">
+                <img src="img/p0/4.png" alt="" class="p p1">
+                <img src="img/p0/2.png" alt="" class="t1"><br>
+                <img src="img/p0/3.png" alt="" class="t2">
+                <img src="img/p0/5.png" alt="" class="p" style="position: absolute;bottom: -5px">
+            </li>
+            <li>
+                <img src="img/p1/1.png" alt="" class="top">
+                <img src="img/p1/2.png" alt="" class="bottom">
+            </li>
+            <li>
+                <img src="img/p1/1.png" alt="" class="top">
+                <img src="img/p1/2.png" alt="" class="bottom">
+            </li>
+            <li>
+                <img src="img/p1/1.png" alt="" class="top">
+                <img src="img/p1/2.png" alt="" class="bottom">
+            </li>
+            <li>
+                <img src="img/p1/1.png" alt="" class="top">
+                <img src="img/p1/2.png" alt="" class="bottom">
+            </li>
+        </ul>
+    </div>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script>
+//        第一次加载完成时
+        window.onload = function () {
+            fn();
+            $(".p1").animate({"margin-top": 0},500,function () {
+                $(".t1").animate({"margin-left": 0},500).add($(".t2").animate({"margin-right": 0},500));
+            });
+        };
+//        划页时
+        var startPage = 0,endPage = 0,num = 1;
+        document.addEventListener("touchstart",function (e) {
+            startPage = e.touches[0].pageY;
+        },false);
+        document.addEventListener("touchmove",function (e) {
+            endPage = e.touches[0].pageY;
+        },false);
+        document.addEventListener("touchend",function () {
+            console.log(startPage - endPage );
+            if(startPage - endPage >= 50){
+                if(num >= 5){
+                    return;
+                }
+                switch (num){
+                    case 1 :
+                        $("#list li:nth-child(1)").slideUp().next().css("display","block").animate({"top":0},200);
+                        break;
+                }
+                num++;
+            }
+
+        },false);
+
+
+
+
+//        当窗口大小改变时
+        window.onresize=function () {
+            fn();
+        };
+        function fn() {
+            var window_W = $(window).width();
+            var window_H = $(window).height();
+            if(window_W > 768 && window_W < 960){
+                $("#warp").width("640px").find("li").height("1150px");
+            }else if(window_W >= 960){
+                $("#warp").width("720px").find("li").height("1250px");
+            }else {
+                $("#warp").width("100%").find("li").height(window_H).find(".bg").height(window_H);
+            }
+        }
+    </script>
+</body>
+</html>
